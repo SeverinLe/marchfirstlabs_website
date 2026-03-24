@@ -12,6 +12,8 @@ const colors = [
   '#34A853'  // Green
 ];
 
+let isMobile = window.innerWidth <= 768;
+
 let mouse = {
   x: window.innerWidth / 2,
   y: window.innerHeight / 2
@@ -20,12 +22,21 @@ let mouse = {
 let time = 0;
 
 window.addEventListener('mousemove', (e) => {
-  mouse.x = e.clientX;
-  mouse.y = e.clientY + window.scrollY; // Adjust for scroll
+  if (!isMobile) {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY + window.scrollY; // Adjust for scroll
+  }
 });
 
 window.addEventListener('resize', () => {
+  isMobile = window.innerWidth <= 768;
   resizeCanvas();
+  if (isMobile) {
+    mouse.x = window.innerWidth / 2;
+    // Keep it centered in hero section
+    const heroSection = document.querySelector('.hero');
+    mouse.y = heroSection ? heroSection.offsetHeight / 2 : window.innerHeight / 2;
+  }
   initParticles();
 });
 
@@ -74,8 +85,8 @@ class Particle {
     let dy = this.baseY - mouse.y;
     let distance = Math.sqrt(dx * dx + dy * dy);
 
-    // 30% screen width constraint
-    let radiusThreshold = window.innerWidth * 0.3;
+    // 30% screen width constraint (larger on mobile so it remains visible)
+    let radiusThreshold = isMobile ? Math.min(window.innerWidth * 0.8, 300) : window.innerWidth * 0.3;
 
     // Only configure size/alpha and draw if within the restricted radius
     if (distance <= radiusThreshold) {

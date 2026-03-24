@@ -509,6 +509,8 @@ body.dark-mode .service-card:hover {
 
 /* Responsive */
 @media (max-width: 900px) {
+  :root { --section-padding: 80px 0; }
+  .section-title { font-size: 2.25rem; }
   .service-cards { grid-template-columns: 1fr; }
   .sticky-scroll-container { 
     flex-direction: column-reverse; 
@@ -523,26 +525,33 @@ body.dark-mode .service-card:hover {
     margin-top: 40px;
   }
   .visual-cards-container {
-    height: 420px;
+    height: 380px;
   }
   .visual-card {
     padding: 24px;
     border-radius: 16px;
   }
   .card-top-icon {
-    font-size: 32px;
-    margin-bottom: 16px;
+    font-size: 28px;
+    margin-bottom: 12px;
+  }
+  .visual-card ul {
+    overflow-y: auto;
   }
   .visual-card li {
-    font-size: 1rem;
-    margin-bottom: 12px;
+    font-size: 0.95rem;
+    margin-bottom: 10px;
   }
   .scroll-step {
     min-height: 80vh;
-    padding: 60px 0;
+    padding: 40px 0;
+  }
+  .scroll-step h2 {
+    font-size: 2.5rem;
   }
   .footer-grid { flex-direction: column; gap: 24px; align-items: flex-start; }
   .nav-links { display: none; }
   .header-left { gap: 16px; }
-  .hero-buttons { flex-direction: column; }
+  .hero-buttons { flex-direction: column; width: 100%; }
+  .hero-buttons button { width: 100%; }
 }
