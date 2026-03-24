@@ -445,13 +445,18 @@ body.dark-mode .service-card:hover {
   margin-bottom: 32px;
 }
 
-.visual-card ul {
+/* Mobile Inline Cards (Hidden on Desktop) */
+.mobile-visual-card {
+  display: none;
+}
+
+.visual-card ul, .mobile-visual-card ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.visual-card li {
+.visual-card li, .mobile-visual-card li {
   color: var(--color-white);
   font-size: 1.125rem;
   margin-bottom: 20px;
@@ -460,7 +465,7 @@ body.dark-mode .service-card:hover {
   line-height: 1.4;
 }
 
-.visual-card li::before {
+.visual-card li::before, .mobile-visual-card li::before {
   content: "✦";
   color: var(--color-blue);
   font-size: 1.2rem;
@@ -511,40 +516,50 @@ body.dark-mode .service-card:hover {
 @media (max-width: 900px) {
   :root { --section-padding: 80px 0; }
   .section-title { font-size: 2.25rem; }
+  
+  /* Disable gradient text wipe animation on mobile */
+  .reveal-text-gradient::after {
+    width: 100% !important;
+    transition: none !important;
+  }
+
   .service-cards { grid-template-columns: 1fr; }
+  
+  /* Fix Solutions Section */
   .sticky-scroll-container { 
-    flex-direction: column-reverse; 
+    flex-direction: column; 
     gap: 0; 
   }
+  
+  /* Hide interactive desktop visual */
   .sticky-visual {
-    position: sticky;
-    top: 80px;
-    height: auto;
-    width: 100%;
-    z-index: 10;
-    margin-top: 40px;
+    display: none;
   }
-  .visual-cards-container {
-    height: 380px;
-  }
-  .visual-card {
-    padding: 24px;
+  
+  /* Show static inline visual cards */
+  .mobile-visual-card {
+    display: block;
+    background: #202124;
+    border: 1px solid #3C4043;
     border-radius: 16px;
+    padding: 24px;
+    margin-top: 32px;
   }
-  .card-top-icon {
-    font-size: 28px;
+  
+  .mobile-visual-card ul {
+    overflow-y: visible;
+  }
+
+  .mobile-visual-card li {
+    font-size: 0.95rem;
     margin-bottom: 12px;
   }
-  .visual-card ul {
-    overflow-y: auto;
-  }
-  .visual-card li {
-    font-size: 0.95rem;
-    margin-bottom: 10px;
-  }
+
+  /* Reset the scroll step taking full screen height */
   .scroll-step {
-    min-height: 80vh;
+    min-height: auto;
     padding: 40px 0;
+    opacity: 1; /* Always visible on mobile since there is no intersection logic */
   }
   .scroll-step h2 {
     font-size: 2.5rem;
